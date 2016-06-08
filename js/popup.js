@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
     xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://www.ageofclones.com/journal/inventory/from_date/08-06-2016/to_date/08-06-2016/page/1", true);
+    xhr.open("GET", "https://www.ageofclones.com/journal/summary/date_range/forever", true);
     xhr.send(null);
     var dmn = "https://www.ageofclones.com";
     xhr.onreadystatechange = function()
@@ -16,7 +16,8 @@ $(document).ready(function(){
                 var data = xhr.responseText;
                 var pager = $('.pager', data);
                 var href = pager.children('a').attr('href');
-                $('#wrapper').html(href);
+                var container = '<a href="'+dmn+href+'" target="_blank">Сыылка 2</a>';
+                $('#wrapper').html(container);
             }
         }
     }
