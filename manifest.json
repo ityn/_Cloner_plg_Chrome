@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Cloner assistant",
+  "version": "1.0.0",
+
+  "default_locale": "ru", // Язык по умолчанию
+  "description": "Главный бухгалтер Клона", // Описание приложения
+
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png" }, // Иконки 16 & 48 & 128, дополнительно можно 32 & 64 & 96 & 256 и т.д.
+
+  "short_name": "Cloner", // Короткое название расширения (~12 символов) для тех мест, где мало места для вывода полного названия
+
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*" ],
+      "js": [ "js/content.js" ],
+      "css": [ "styles/styles.css" ]
+    }
+  ],
+
+  "background": {
+    "page": "background.html",
+    "scripts": ["js/scripts.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "https://*.ageofclones.com/*",
+    "http://*.google.com/",
+    "tabs", // Доступ к объекту Tabs
+    "activeTab" // Доступ к объекту ActiveTabs
+  ],
+
+  "browser_action": {
+    "default_title": "Cloner assistant",
+    "default_icon": "img/icon48.png",
+    "default_popup": "html/popup.html"
+  },
+
+  "options_page": "options.html"
+
+}
