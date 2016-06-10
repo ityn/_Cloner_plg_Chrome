@@ -42,7 +42,7 @@ function splitData(last_page)
 $(document).ready(function(){
     xhr = new XMLHttpRequest();
     xhr.open("GET", "https://www.ageofclones.com/journal/summary/date_range/forever/page/2", true);
-    xhr.send(null);
+    xhr.send();
     var dmn = "https://www.ageofclones.com";
     xhr.onreadystatechange = function()
     {
