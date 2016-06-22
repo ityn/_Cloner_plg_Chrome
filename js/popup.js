@@ -38,9 +38,18 @@ function splitData(last_page)
     return res;
 
 }
-
+/*
+ https://www.ageofclones.com/journal/kalita/from_date/20-06-2016/to_date/22-06-2016/page/1
+ */
 $(document).ready(function(){
-    xhr = new XMLHttpRequest();
+
+    $('#wrapper').html('<b><i>Получить данные:</i></b> <form action="">' +
+        '<input type="date">date1' +
+        '<input type="date">date2' +
+        '<button type="submit" onclick="splitData(1)">get data</button>' +
+        '</form>');
+    $('#wrapper').append('<br><i>Полученные данные:</i></br>');
+    /*xhr = new XMLHttpRequest();
     xhr.open("GET", "https://www.ageofclones.com/journal/summary/date_range/forever/page/2", true);
     xhr.send();
     var dmn = "https://www.ageofclones.com";
@@ -50,7 +59,7 @@ $(document).ready(function(){
         {
             if (xhr.responseText)
             {
-                /*var data = xhr.responseText;
+                /!*var data = xhr.responseText;
                 var pager = $('.pager', data);
                 var last_count = pager.children('.arr.last').attr('href');
                 var arr = last_count.split('/');
@@ -62,7 +71,7 @@ $(document).ready(function(){
 
                 $('#wrapper').html('<b><i>Полученные данные:</i></b>');
                 $('#wrapper').append('<br>'+last_count);
-                $('#wrapper').append('<br>'+container);*/
+                $('#wrapper').append('<br>'+container);*!/
                 var data = xhr.responseText;
                 var table_data = $('table#journal_entries tbody', data);
                 //var table = table_data.children('tbody');
@@ -81,5 +90,5 @@ $(document).ready(function(){
                  }
             }
         }
-    }
+    }*/
 });
