@@ -2,93 +2,54 @@
  * Created by freez on 08.06.2016.
  */
 
-function splitData(last_page)
-{
-    last_page = last_page || 2;
-    var n = 1;
-    var x = 0;
-    var str = {};
-    var res = [];
-    var xhr = new XMLHttpRequest();
-    var addr = 'https://www.ageofclones.com/journal/summary/date_range/forever/page/';
-    while (n < last_page)
-    {
-        var addrn = addr+n;
-        xhr.open("GET", addrn, false);
-        xhr.send(null);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                if (xhr.responseText) {
-                    var data = xhr.responseText;
-                    var table = data.children('#journal_entries');
-                    var myRows = table.find('tr');
-                    for (var i = 1; i < myRows.length; i++)
-                    {
-                        for (var j = 0; j < 5; j++)
-                        {
-                            console.log(myRows[i].find('td:eq('+j+')').html());
-                        }
-                    }
-                }
-            }
-        };
 
-        n ++;
-    }
-    return res;
-
-}
 /*
  https://www.ageofclones.com/journal/kalita/from_date/20-06-2016/to_date/22-06-2016/page/1
  */
 $(document).ready(function(){
+    $('#header').html('' +
+        '<input type="date" id="dt1" value="'+new Date()+'">date1' +
+        '<input type="date" id="dt2" value="'+new Date()+'">date2' +
+        '<button type="button" id="btn_sbm">get data</button>' +
+        '');
+    //$('#wrapper').html('<br><i>Полученные данные:</i></br>');
+    $('#btn_sbm').click(function(e){
+        var dt1 = new Date($('#dt1').val());
+        var dt1_str = ""+dt1.getDate()+"-"+Math.round(dt1.getMonth()+1)+"-"+dt1.getFullYear();
+        var dt2 = new Date($('#dt2').val());
+        var dt2_str = ""+dt2.getDate()+"-"+Math.round(dt2.getMonth()+1)+"-"+dt2.getFullYear();
 
-    $('#wrapper').html('<b><i>Получить данные:</i></b> <form action="">' +
-        '<input type="date">date1' +
-        '<input type="date">date2' +
-        '<button type="submit" onclick="splitData(1)">get data</button>' +
-        '</form>');
-    $('#wrapper').append('<br><i>Полученные данные:</i></br>');
-    /*xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://www.ageofclones.com/journal/summary/date_range/forever/page/2", true);
-    xhr.send();
-    var dmn = "https://www.ageofclones.com";
-    xhr.onreadystatechange = function()
-    {
-        if (xhr.readyState == 4)
-        {
-            if (xhr.responseText)
-            {
-                /!*var data = xhr.responseText;
-                var pager = $('.pager', data);
-                var last_count = pager.children('.arr.last').attr('href');
-                var arr = last_count.split('/');
-                var count = arr[6];
-                //var content = splitData();
+        var addr = "https://www.ageofclones.com/journal/kalita/from_date/"+dt1_str+"/to_date/"+dt2_str+"/page/1";
+        $('#wrapper').html('<br><i>Полученные данные:</i></br>'+addr);
 
-                var href = pager.children('a').attr('href');
-                var container = '<a href="'+dmn+href+'" target="_blank">Сыылка 2</a>';
-
-                $('#wrapper').html('<b><i>Полученные данные:</i></b>');
-                $('#wrapper').append('<br>'+last_count);
-                $('#wrapper').append('<br>'+container);*!/
-                var data = xhr.responseText;
-                var table_data = $('table#journal_entries tbody', data);
-                //var table = table_data.children('tbody');
-                var myRows = table_data.find('tr');
-                $('#wrapper').html('<b><i>Полученные данные:</i></b>');
-                for (var i = 1; i < myRows.length; i++)
+         xhr = new XMLHttpRequest();
+         xhr.open("GET", addr, true);
+         xhr.send();
+         var dmn = "https://www.ageofclones.com";
+         xhr.onreadystatechange = function()
+         {
+             if (xhr.readyState == 4)
+             {
+                 if (xhr.responseText)
                  {
-                     $('#wrapper').append('<br>');
-                     for (var j = 0; j < 6; j++)
+                     var data = xhr.responseText;
+                     var table_data = $('table#journal_entries tbody', data);
+                     //var table = table_data.children('tbody');
+                     var myRows = table_data.find('tr');
+                     $('#wrapper').html('<b><i>Полученные данные:</i></b>');
+                     for (var i = 1; i < myRows.length; i++)
                      {
-                         //var dt = ($(myRows[i].find('td:eq('+j+')').html()));
-                         var dt = ($(myRows[i]).find('td:eq('+j+')').html());
-                         $('#wrapper').append(dt);
-                         $('#wrapper').append(' | ');
+                         $('#wrapper').append('<br>');
+                         for (var j = 0; j < 9; j++)
+                         {
+                             var dt = ($(myRows[i]).find('td:eq('+j+')').html());
+                             $('#wrapper').append(dt);
+                             $('#wrapper').append(' | ');
+                         }
                      }
                  }
-            }
-        }
-    }*/
+             }
+         }
+    });
+
 });
