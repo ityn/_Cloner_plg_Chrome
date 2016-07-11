@@ -55,6 +55,16 @@ $(document).ready(function(){
                          res.name = $(myRows[i]).find('td:eq('+2+')').html();
                          res_json.push(res);
                      }
+                     $.ajax({
+                         type: "POST",
+                         url: "http://b3coin.com:3000/opt",
+                         // The key needs to match your method's input parameter (case-sensitive).
+                         data: JSON.stringify({ res_json: res_json }),
+                         contentType: "application/json; charset=utf-8",
+                         dataType: "json",
+                         success: function(data){alert(data);},
+                         failure: function(errMsg){alert(errMsg);}
+                     });
                      console.log(res_json);
                  }
              }
