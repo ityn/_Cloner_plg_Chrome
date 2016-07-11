@@ -63,12 +63,24 @@ $(document).ready(function(){
                          }
                          var str_dt = $(myRows[i]).find('td:eq('+1+')').html();
                          var onclck = $(str_dt).attr('onclick');
-                         rs.created_at = onclck.match(/\d{10}/)[0];
+                         rs.created_at = onclck.match(/'(\d+)'/)[1];
 
                          var str_dt = $(myRows[i]).find('td:eq('+2+')').html();
                          var onclck = $(str_dt).attr('onclick');
-                         console.log(onclck.match(/\d+/));
-                         rs.clone_id = onclck.match(/\d+/)[0];
+                         //console.log(onclck.match(/'(\d+)'/));
+                         rs.clone_id = onclck.match(/'(\d+)'/)[1];
+                         rs.clone_name = $(myRows[i]).find('td:eq('+2+')').text();
+                         rs.delta = ($(myRows[i]).find('td:eq('+4+')').text()).split(/[+-]/)[1];
+                         rs.saldo = $(myRows[i]).find('td:eq('+5+')').text();
+
+                         var comment =$(myRows[i]).find('td:eq('+6+')').html();
+                         //.split(/\r+/g)
+                         console.log(new Date(new Number(rs.created_at)));
+                         //console.log(comment);
+                         rs.comment = $(comment)[0].text;
+                         rs.comment1 = $(comment)[2].textContent;
+
+                         rs.ref = $(myRows[i]).find('td:eq('+7+')').text();
 
                          //****************************
                          rs.dt = $(myRows[i]).find('td:eq('+1+')').html();
