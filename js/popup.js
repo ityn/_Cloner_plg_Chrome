@@ -41,19 +41,39 @@ $(document).ready(function(){
                      //var table = table_data.children('tbody');
                      var myRows = table_data.find('tr');
 
-                     for (var i = 1; i < myRows.length; i++)
+                     for (var i = 1; i < myRows.length-1; i++)
                      {
                          $('#wrapper').append('<br>');
-                         var res = {};
-                         for (var j = 0; j < 9; j++)
-                         {
-                             var dt = ($(myRows[i]).find('td:eq('+j+')').html());
-                             $('#wrapper').append(dt);
-                             $('#wrapper').append(' | ');
+                         var rs = {};
+                         //for (var j = 0; j < 9; j++)
+                         //{
+                         //    var dt = ($(myRows[i]).find('td:eq('+j+')').html());
+                         //    var str_dt = $(dt).attr('onclick');
+                         //    var myRe = str_dt.search(/add/);
+                         //    console.log(myRe);
+                         //    $('#wrapper').append(dt);
+                         //    $('#wrapper').append(' | ');
+                         //}
+                         //****************************
+                         var str_dt = $(myRows[i]).find('td:eq('+0+')').html();
+                         if (str_dt.search(/add/) > -1){
+                             rs.operation = 'add';
+                         } else {
+                             rs.operation = 'sub';
                          }
-                         res.dt = $(myRows[i]).find('td:eq('+1+')').html();
-                         res.name = $(myRows[i]).find('td:eq('+2+')').html();
-                         res_json.push(res);
+                         var str_dt = $(myRows[i]).find('td:eq('+1+')').html();
+                         var onclck = $(str_dt).attr('onclick');
+                         rs.created_at = onclck.match(/\d{10}/)[0];
+
+                         var str_dt = $(myRows[i]).find('td:eq('+2+')').html();
+                         var onclck = $(str_dt).attr('onclick');
+                         console.log(onclck.match(/\d+/));
+                         rs.clone_id = onclck.match(/\d+/)[0];
+
+                         //****************************
+                         rs.dt = $(myRows[i]).find('td:eq('+1+')').html();
+                         rs.name = $(myRows[i]).find('td:eq('+2+')').html();
+                         res_json.push(rs);
                      }
                      $.ajax({
                          type: "POST",
