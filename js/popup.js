@@ -75,10 +75,11 @@ $(document).ready(function(){
 
                          var comment =$(myRows[i]).find('td:eq('+6+')').html();
                          //.split(/\r+/g)
-                         console.log(new Date(new Number(rs.created_at)));
-                         //console.log(comment);
-                         rs.comment = $(comment)[0].text;
-                         rs.comment1 = $(comment)[2].textContent;
+                         //console.log(new Date(new Number(rs.created_at)));
+                         console.log(comment);
+                         rs.action_type = ($(comment).attr('onclick')).match(/'(\d+)'/)[1];
+                         rs.comment1 = $(comment).html();
+                         rs.comment2 = $('br',comment).html();
 
                          rs.ref = $(myRows[i]).find('td:eq('+7+')').text();
 
