@@ -21,6 +21,7 @@ $(document).ready(function(){
         var res_json = [];
         var dmn = "https://www.ageofclones.com";
         var addr = dmn+"/journal/kalita/from_date/"+dt1_str+"/to_date/"+dt2_str+"/page/1";
+        var last_page = '';
         $('#wrapper').html('<br><i>Полученные данные:</i></br>'+addr);
 
          xhr = new XMLHttpRequest();
@@ -35,7 +36,8 @@ $(document).ready(function(){
                  {
                      var data = xhr.responseText;
                      var pg_last = $('div.pager a.arr.last', data);
-                     $('#wrapper').html('<b><i>Полученные данные:</i></b>');
+                     last_page = pg_last.attr('href');
+                     console.log(last_page);
                      $('#footer').html(pg_last.attr('href'));
                      var table_data = $('table#journal_entries tbody', data);
                      //var table = table_data.children('tbody');
@@ -45,15 +47,6 @@ $(document).ready(function(){
                      {
                          $('#wrapper').append('<br>');
                          var rs = {};
-                         //for (var j = 0; j < 9; j++)
-                         //{
-                         //    var dt = ($(myRows[i]).find('td:eq('+j+')').html());
-                         //    var str_dt = $(dt).attr('onclick');
-                         //    var myRe = str_dt.search(/add/);
-                         //    console.log(myRe);
-                         //    $('#wrapper').append(dt);
-                         //    $('#wrapper').append(' | ');
-                         //}
                          //****************************
                          var str_dt = $(myRows[i]).find('td:eq('+0+')').html();
                          if (str_dt.search(/add/) > -1){
@@ -76,7 +69,7 @@ $(document).ready(function(){
                          var comment =$(myRows[i]).find('td:eq('+6+')').html();
                          //.split(/\r+/g)
                          //console.log(new Date(new Number(rs.created_at)));
-                         console.log($(comment).children);
+                         //console.log($(comment).children);
                          rs.action_type = ($(comment).attr('onclick')).match(/'(\d+)'/)[1];
                          rs.comment1 = $(comment).text();
                          rs.comment2 = $(comment).val();
@@ -87,8 +80,10 @@ $(document).ready(function(){
                          //****************************
                          rs.dt = $(myRows[i]).find('td:eq('+1+')').html();
                          rs.name = $(myRows[i]).find('td:eq('+2+')').html();
+
                          res_json.push(rs);
                      }
+                     $('#wrapper').html('<b><i>Полученные данные:</i></b>'+JSON.stringify({ res_json: res_json }));
                      $.ajax({
                          type: "POST",
                          url: "http://b3coin.com:3000/opt",
