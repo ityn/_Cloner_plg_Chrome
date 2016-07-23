@@ -91,7 +91,7 @@ $(document).ready(function(){
                          data: JSON.stringify({ res_json: res_json }),
                          contentType: "application/json; charset=utf-8",
                          dataType: "json",
-                         success: function(data){alert(data);},
+                         success: function(data){$('#footer').html(JSON.stringify(data));},
                          failure: function(errMsg){alert(errMsg);}
                      });
                      console.log(res_json);
