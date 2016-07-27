@@ -17,9 +17,9 @@ function snd_data(dt, addr, page, last_page){
         dataType: "json",
         success: function(data){
             $('#footer').append(JSON.stringify(data)+'<br>');
-            //if(addr_next != last_page){
+            if(last_page){
                 get_data(addr, page+1, last_page);
-            //}
+            }
         },
         failure: function(errMsg){alert(errMsg);}
     });
@@ -71,13 +71,17 @@ function get_data(addr, page, last_page){
                         rs.saldo = $(myRows[i]).find('td:eq(' + 5 + ')').text();
 
                         var comment = $(myRows[i]).find('td:eq(' + 6 + ')').html();
-                        //.split(/\r+/g)
-                        //console.log(new Date(new Number(rs.created_at)));
-                        //console.log($(comment).children);
                         rs.action_type = ($(comment).attr('onclick')).match(/'(\d+)'/)[1];
-                        rs.comment1 = $(comment).text();
-                        rs.comment2 = $(comment).val();
-                        rs.comment3 = $(comment).html();
+
+                        var comment2 = $(myRows[i]).find('td:eq(' + 6 + ')');
+
+                        var arr1 = $(comment2).text().split(/\s*\n/);
+                        console.log(arr1);
+                        rs.comment1 = arr1[0];  //$(comment).text();
+                        rs.comment2 = arr1[1];  //$(comment2).text();
+                        rs.comment3 = arr1[2];  //$(comment).html();
+                        rs.comment4 = arr1[3];  //$(comment).html();
+                        rs.comment5 = arr1[4];  //$(comment).html();
 
                         rs.ref = $(myRows[i]).find('td:eq(' + 7 + ')').text();
 
@@ -174,9 +178,15 @@ $(document).ready(function(){
                             //console.log(new Date(new Number(rs.created_at)));
                             //console.log($(comment).children);
                             rs.action_type = ($(comment).attr('onclick')).match(/'(\d+)'/)[1];
-                            rs.comment1 = $(comment).text();
-                            rs.comment2 = $(comment).val();
-                            rs.comment3 = $(comment).html();
+
+                            var comment2 = $(myRows[i]).find('td:eq(' + 6 + ')');
+                            var arr1 = $(comment2).text().split(/\s*\n/);
+                            console.log(arr1);
+                            rs.comment1 = arr1[0];  //$(comment).text();
+                            rs.comment2 = arr1[1];  //$(comment2).text();
+                            rs.comment3 = arr1[2];  //$(comment).html();
+                            rs.comment4 = arr1[3];  //$(comment).html();
+                            rs.comment5 = arr1[4];  //$(comment).html();
 
                             rs.ref = $(myRows[i]).find('td:eq(' + 7 + ')').text();
 
